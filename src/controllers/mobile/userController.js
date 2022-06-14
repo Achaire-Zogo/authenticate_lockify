@@ -34,8 +34,10 @@ exports.loginLockify = (req, res) => {
                         let sel = 'SELECT id FROM store_mysuer WHERE user_id = ? ';
                         mysqlConnection.query(sel, [resultrows[0].id], (error1, result, fields) => {
                             if (!error1) {
+                                console.log(result[0].id);
                                 return res.json({ status: 'success', data: resultrows, id: result[0].id });
                             } else {
+                                console.log(error1);
                                 return res.json({ status: 'error', error1: error1 });
                             }
                         })
