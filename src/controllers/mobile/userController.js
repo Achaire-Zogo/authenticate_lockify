@@ -31,11 +31,11 @@ exports.loginLockify = (req, res) => {
                     if (resultrows[0].is_active == '0') {
                         return res.json({ status: 'no_active', data: 'please verify your account' });
                     } else {
-                        let sel = 'SELECT id FROM store_mysuer WHERE user_id = ? ';
+                        let sel = 'SELECT id FROM store_myuser WHERE user_id = ? ';
                         mysqlConnection.query(sel, [resultrows[0].id], (error1, result, fields) => {
                             if (!error1) {
                                 console.log(result[0].id);
-                                return res.json({ hello: 'hello', status: 'success', myid: result[0].id, data: resultrows });
+                                return res.json({ status: 'success', myid: result[0].id, data: resultrows });
                             } else {
                                 console.log(error1);
                                 return res.json({ status: 'error', error1: error1 });
