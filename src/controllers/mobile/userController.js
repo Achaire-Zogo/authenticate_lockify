@@ -29,9 +29,17 @@ exports.loginLockify = (req, res) => {
                     return res.json({ status: 'invalid credential', password: password });
                 } else {
                     if (resultrows[0].is_active == '0') {
-                        return res.json({ status: 'success', data: 'please verify your account' });
+                        return res.json({ status: 'no_active', data: 'please verify your account' });
                     } else {
-                        return res.json({ status: 'success', data: resultrows });
+                        let sel = 'SELECT id FROM store_mysuer WHERE user_id = ? ';
+                        mysqlConnection.query(sel, [resultrows[0].id], (error1, result, fields) => {
+                            if (!error1) {
+                                return res.json({ status: 'success', data: resultrows, id: result[0].id });
+                            } else {
+                                return res.json({ status: 'error', error1: error1 });
+                            }
+                        })
+
                     }
                 }
             } else {
